@@ -11,7 +11,7 @@ const Navbar = () => {
       </div>
       <div>
         <NavLink to="/About me" activeClassName={classTags.activeLink}>
-          Обо мн
+          Обо мне
         </NavLink>
       </div>
       <div>
