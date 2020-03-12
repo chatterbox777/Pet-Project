@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
 import Music from "./Components/Music/Music";
+import { connect } from "react-redux";
 
 class App extends React.Component {
   state = {
@@ -18,16 +19,21 @@ class App extends React.Component {
       { id: 2, songName: "Светофоры", artist: "Леша Свик", isOn: false },
       { id: 3, songName: "Da Da Da", artist: "Tanir, Tyomcha", isOn: false },
       { id: 4, songName: "Чужая", artist: "Артур Пирожков", isOn: false }
-    ],
-    count: 0
+    ]
   };
 
-  increment = () => {
-    this.setState({ count: this.state.count + 1 });
-  };
-  decrement = () => {
-    this.setState({ count: this.state.count - 1 });
-  };
+  // increment = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     count: this.state.count + 1
+  //   });
+  // };
+  // decrement = () => {
+  //   this.setState({
+  //     ...this.state,
+  //     count: this.state.count - 1
+  //   });
+  // };
 
   render() {
     return (
@@ -36,13 +42,14 @@ class App extends React.Component {
           <Navbar />
           <Route path="/Profile" render={() => <Profile />} />
           <Route
-            path="/Music"
-            render={() => <Music items={this.state.items} />}
-          />
-          <Form
-            counter={this.state.count}
-            increment={this.increment}
-            decrement={this.decrement}
+            path="/Counter"
+            render={() => (
+              <Form
+                counter={this.props.count}
+                increment={this.props.increment}
+                decrement={this.props.decrement}
+              />
+            )}
           />
         </div>
       </BrowserRouter>
@@ -62,4 +69,17 @@ class Form extends React.Component {
   }
 }
 
-export default App;
+const mapStateToProps = state => {
+  return {
+    count: state.count
+  };
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    increment: () => dispatch({ type: "INCREMENT" }),
+    decrement: () => dispatch({ type: "DECREMENT" })
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

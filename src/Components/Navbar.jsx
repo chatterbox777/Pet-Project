@@ -15,8 +15,8 @@ const Navbar = () => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/Music" activeClassName={classTags.activeLink}>
-          Музыка
+        <NavLink to="/Counter" activeClassName={classTags.activeLink}>
+          Счетчик
         </NavLink>
       </div>
       <div>
