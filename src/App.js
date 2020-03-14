@@ -4,7 +4,6 @@ import "./App.css";
 import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
-import Music from "./Components/Music/Music";
 import { connect } from "react-redux";
 
 class App extends React.Component {
