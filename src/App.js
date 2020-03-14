@@ -47,6 +47,8 @@ class App extends React.Component {
                 counter={this.props.count}
                 increment={this.props.increment}
                 decrement={this.props.decrement}
+                history={this.props.history}
+                onDeleteItem={this.props.onDeleteItem}
               />
             )}
           />
@@ -63,6 +65,17 @@ class Form extends React.Component {
         <div className="form">{this.props.counter}</div>
         <button onClick={this.props.increment}>+</button>
         <button onClick={this.props.decrement}>-</button>
+
+        <div>History</div>
+        <div>
+          <ul>
+            {this.props.history.map(el => (
+              <li key={el.id} onClick={() => this.props.onDeleteItem(el.id)}>
+                {el.count}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     );
   }
@@ -70,14 +83,16 @@ class Form extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    count: state.count
+    count: state.count,
+    history: state.history
   };
 };
 
 const mapDispatchToProps = dispatch => {
   return {
-    increment: () => dispatch({ type: "INCREMENT" }),
-    decrement: () => dispatch({ type: "DECREMENT" })
+    increment: () => dispatch({ type: "INCREMENT", value: 1 }),
+    decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
+    onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id })
   };
 };
 
