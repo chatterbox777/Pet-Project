@@ -1,6 +1,10 @@
-const initialState = {
+let initialState = {
   count: 0,
-  history: []
+  history: [],
+  messages: [
+    { id: 1, text: "Привет всем" },
+    { id: 2, text: "Всем пока)" }
+  ]
 };
 
 const reducer = (state = initialState, action) => {
@@ -16,7 +20,6 @@ const reducer = (state = initialState, action) => {
           count: state.count + action.value
         })
       };
-      break;
     case "DECREMENT":
       return {
         ...state,
@@ -26,15 +29,25 @@ const reducer = (state = initialState, action) => {
           count: state.count - action.value
         })
       };
-      break;
+
     case "DELETE_ITEM":
       return {
         ...state,
         history: state.history.filter(item => item.id !== action.key)
       };
-      break;
+
+    case "ADD_MESSAGE":
+      return {
+        ...state,
+        messages: [
+          ...state.messages,
+          { id: Math.random() * 10, text: action.value }
+        ]
+      };
+
+    default:
+      return newState;
   }
-  return newState;
 };
 
 export default reducer;

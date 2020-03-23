@@ -7,20 +7,6 @@ import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
 
 class App extends React.Component {
-  state = {
-    items: [
-      {
-        id: 1,
-        songName: "Ухожу",
-        artist: "Ани Лорак, Миша Марвин",
-        isOn: false
-      },
-      { id: 2, songName: "Светофоры", artist: "Леша Свик", isOn: false },
-      { id: 3, songName: "Da Da Da", artist: "Tanir, Tyomcha", isOn: false },
-      { id: 4, songName: "Чужая", artist: "Артур Пирожков", isOn: false }
-    ]
-  };
-
   // increment = () => {
   //   this.setState({
   //     ...this.state,
@@ -49,6 +35,15 @@ class App extends React.Component {
                 decrement={this.props.decrement}
                 history={this.props.history}
                 onDeleteItem={this.props.onDeleteItem}
+              />
+            )}
+          />
+          <Route
+            path="/Chat"
+            render={() => (
+              <Chat
+                addMessage={this.props.addMessage}
+                messages={this.props.messages}
               />
             )}
           />
@@ -81,10 +76,40 @@ class Form extends React.Component {
   }
 }
 
+class Chat extends React.Component {
+  handleSubmit = e => {
+    e.preventDefault();
+    this.props.addMessage();
+  };
+
+  render() {
+    return (
+      <div className={classTags.disp}>
+        <div className={classTags.window}>
+          <ul>
+            {this.props.messages.map(item => (
+              <li key={item.id}>{item.text}</li>
+            ))}
+          </ul>
+        </div>
+        <form onSubmit={this.handleSubmit}>
+          <input
+            className={classTags.inputText}
+            type="text"
+            placeholder="Введите сообщение"
+          />
+          <button>Отправить</button>
+        </form>
+      </div>
+    );
+  }
+}
+
 const mapStateToProps = state => {
   return {
     count: state.count,
-    history: state.history
+    history: state.history,
+    messages: state.messages
   };
 };
 
@@ -92,7 +117,8 @@ const mapDispatchToProps = dispatch => {
   return {
     increment: () => dispatch({ type: "INCREMENT", value: 1 }),
     decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
-    onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id })
+    onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
+    addMessage: () => dispatch({ type: "ADD_MESSAGE", value: "HAHAHA" })
   };
 };
 

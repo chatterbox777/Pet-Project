@@ -20,8 +20,8 @@ const Navbar = () => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/Videos" activeClassName={classTags.activeLink}>
-          Видео
+        <NavLink to="/Chat" activeClassName={classTags.activeLink}>
+          Чат
         </NavLink>
       </div>
     </div>
