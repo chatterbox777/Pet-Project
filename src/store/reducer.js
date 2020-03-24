@@ -1,15 +1,12 @@
+import { combineReducers } from "redux";
+import { chatReducer } from "../store/chat-reducer";
+
 let initialState = {
   count: 0,
-  history: [],
-  messages: [
-    { id: 1, text: "Привет всем" },
-    { id: 2, text: "Всем пока)" }
-  ]
+  history: []
 };
 
 const reducer = (state = initialState, action) => {
-  const newState = { ...state };
-
   switch (action.type) {
     case "INCREMENT":
       return {
@@ -20,6 +17,7 @@ const reducer = (state = initialState, action) => {
           count: state.count + action.value
         })
       };
+
     case "DECREMENT":
       return {
         ...state,
@@ -36,18 +34,12 @@ const reducer = (state = initialState, action) => {
         history: state.history.filter(item => item.id !== action.key)
       };
 
-    case "ADD_MESSAGE":
-      return {
-        ...state,
-        messages: [
-          ...state.messages,
-          { id: Math.random() * 10, text: action.value }
-        ]
-      };
-
     default:
-      return newState;
+      return state;
   }
 };
 
-export default reducer;
+export default combineReducers({
+  reducer,
+  chatReducer
+});

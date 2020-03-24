@@ -5,6 +5,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
+import { actions } from "../src/store/chat-reducer";
 
 class App extends React.Component {
   // increment = () => {
@@ -77,9 +78,21 @@ class Form extends React.Component {
 }
 
 class Chat extends React.Component {
+  state = {
+    text: "",
+    id: ""
+  };
+
+  changeInputValue = e => {
+    const {
+      target: { value }
+    } = e;
+    this.setState({ text: value, id: value });
+  };
+
   handleSubmit = e => {
     e.preventDefault();
-    this.props.addMessage();
+    this.props.addMessage(this.state);
   };
 
   render() {
@@ -97,6 +110,7 @@ class Chat extends React.Component {
             className={classTags.inputText}
             type="text"
             placeholder="Введите сообщение"
+            onChange={this.changeInputValue}
           />
           <button>Отправить</button>
         </form>
@@ -107,9 +121,9 @@ class Chat extends React.Component {
 
 const mapStateToProps = state => {
   return {
-    count: state.count,
-    history: state.history,
-    messages: state.messages
+    count: state.reducer.count,
+    history: state.reducer.history,
+    messages: state.chatReducer.messages
   };
 };
 
@@ -118,7 +132,7 @@ const mapDispatchToProps = dispatch => {
     increment: () => dispatch({ type: "INCREMENT", value: 1 }),
     decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
     onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
-    addMessage: () => dispatch({ type: "ADD_MESSAGE", value: "HAHAHA" })
+    addMessage: value => dispatch(actions.addMessage(value))
   };
 };
 
