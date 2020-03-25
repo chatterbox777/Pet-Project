@@ -6,6 +6,7 @@ import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
 import { actions } from "../src/store/chat-reducer";
+import { DELETE_MESSAGE } from "./store/constants";
 
 class App extends React.Component {
   // increment = () => {
@@ -45,6 +46,7 @@ class App extends React.Component {
               <Chat
                 addMessage={this.props.addMessage}
                 messages={this.props.messages}
+                deleteMessage={this.props.deleteMessage}
               />
             )}
           />
@@ -87,11 +89,15 @@ class Chat extends React.Component {
     const {
       target: { value }
     } = e;
-    this.setState({ text: value, id: value });
+    this.setState({ text: value, id: Date.now().toString() });
   };
 
   handleSubmit = e => {
+    console.log(e.target.closest("input"));
     e.preventDefault();
+    if (!this.state.text.trim()) {
+      return;
+    }
     this.props.addMessage(this.state);
   };
 
@@ -101,7 +107,10 @@ class Chat extends React.Component {
         <div className={classTags.window}>
           <ul>
             {this.props.messages.map(item => (
-              <li key={item.id}>{item.text}</li>
+              <li key={item.id}>
+                {item.text}
+                <span onClick={() => this.props.deleteMessage(item.id)}>X</span>
+              </li>
             ))}
           </ul>
         </div>
@@ -132,7 +141,8 @@ const mapDispatchToProps = dispatch => {
     increment: () => dispatch({ type: "INCREMENT", value: 1 }),
     decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
     onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
-    addMessage: value => dispatch(actions.addMessage(value))
+    addMessage: value => dispatch({ type: "ADD_MESSAGE", value: value }),
+    deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id })
   };
 };
 

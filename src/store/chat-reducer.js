@@ -2,7 +2,8 @@ import { createAction } from "redux-actions";
 import * as constants from "./constants";
 
 export const actions = {
-  addMessage: createAction(constants.ADD_MESSAGE)
+  addMessage: createAction(constants.ADD_MESSAGE),
+  deleteMessage: createAction(constants.DELETE_MESSAGE)
 };
 
 let initialState = {
@@ -18,9 +19,14 @@ export const chatReducer = (state = initialState, action) => {
       console.log(action);
       return {
         ...state,
-        messages: [...state.messages, action.payload]
+        messages: state.messages.concat(action.value)
       };
-
+    case "DELETE_MESSAGE":
+      console.log(action);
+      return {
+        ...state,
+        messages: state.messages.filter(item => item.id !== action.key)
+      };
     default:
       return state;
   }
