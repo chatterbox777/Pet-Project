@@ -37,6 +37,7 @@ class App extends React.Component {
                 decrement={this.props.decrement}
                 history={this.props.history}
                 onDeleteItem={this.props.onDeleteItem}
+                deleteHistory={this.props.deleteHistory}
               />
             )}
           />
@@ -64,12 +65,25 @@ class Form extends React.Component {
         <button onClick={this.props.increment}>+</button>
         <button onClick={this.props.decrement}>-</button>
 
-        <div>History</div>
-        <div>
+        <div className={classTags.flex}>
+          <h4>History</h4>
+          <input
+            onClick={() => this.props.deleteHistory()}
+            type="submit"
+            value="delete history"
+          />
+        </div>
+        <div className={classTags.form}>
           <ul>
             {this.props.history.map(el => (
-              <li key={el.id} onClick={() => this.props.onDeleteItem(el.id)}>
+              <li key={el.id}>
                 {el.count}
+                <span
+                  onClick={() => this.props.onDeleteItem(el.id)}
+                  className={classTags.formSpan}
+                >
+                  X
+                </span>
               </li>
             ))}
           </ul>
@@ -142,7 +156,8 @@ const mapDispatchToProps = dispatch => {
     decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
     onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
     addMessage: value => dispatch({ type: "ADD_MESSAGE", value: value }),
-    deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id })
+    deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id }),
+    deleteHistory: () => dispatch({ type: "DELETE_HISTORY" })
   };
 };
 

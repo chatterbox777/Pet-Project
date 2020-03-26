@@ -33,6 +33,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         history: state.history.filter(item => item.id !== action.key)
       };
+    case "DELETE_HISTORY":
+      return {
+        ...state,
+        history: state.history.splice(0, 0)
+      };
 
     default:
       return state;
