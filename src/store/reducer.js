@@ -1,5 +1,6 @@
 import { combineReducers } from "redux";
 import { chatReducer } from "../store/chat-reducer";
+import { usersReducer } from "./users-reducer";
 
 let initialState = {
   count: 0,
@@ -46,5 +47,6 @@ const reducer = (state = initialState, action) => {
 
 export default combineReducers({
   reducer,
-  chatReducer
+  chatReducer,
+  usersReducer
 });

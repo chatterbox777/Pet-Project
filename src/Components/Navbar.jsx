@@ -10,8 +10,8 @@ const Navbar = () => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/About me" activeClassName={classTags.activeLink}>
-          Обо мне
+        <NavLink to="/Users" activeClassName={classTags.activeLink}>
+          Пользователи
         </NavLink>
       </div>
       <div>

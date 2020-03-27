@@ -5,8 +5,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
-import { actions } from "../src/store/chat-reducer";
-import { DELETE_MESSAGE } from "./store/constants";
+import * as axios from "axios";
 
 class App extends React.Component {
   // increment = () => {
@@ -49,6 +48,12 @@ class App extends React.Component {
                 messages={this.props.messages}
                 deleteMessage={this.props.deleteMessage}
               />
+            )}
+          />
+          <Route
+            path="/Users"
+            render={() => (
+              <Users addUser={this.props.addUser} users={this.props.users} />
             )}
           />
         </div>
@@ -142,11 +147,45 @@ class Chat extends React.Component {
   }
 }
 
+class Users extends React.Component {
+  state = {
+    isloaded: false
+  };
+
+  componentDidMount() {
+    axios
+      .get("https://social-network.samuraijs.com/api/1.0/users")
+      .then(response => {
+        debugger;
+        if (this.state.isloaded == false) {
+          this.props.addUser(response.data.items);
+        }
+        this.setState({
+          ...this.state,
+          isloaded: true
+        });
+      });
+  }
+
+  render() {
+    return (
+      <div>
+        <ul>
+          {this.props.users.map(user => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  }
+}
+
 const mapStateToProps = state => {
   return {
     count: state.reducer.count,
     history: state.reducer.history,
-    messages: state.chatReducer.messages
+    messages: state.chatReducer.messages,
+    users: state.usersReducer.users
   };
 };
 
@@ -157,7 +196,8 @@ const mapDispatchToProps = dispatch => {
     onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
     addMessage: value => dispatch({ type: "ADD_MESSAGE", value: value }),
     deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id }),
-    deleteHistory: () => dispatch({ type: "DELETE_HISTORY" })
+    deleteHistory: () => dispatch({ type: "DELETE_HISTORY" }),
+    addUser: person => dispatch({ type: "ADD_USER", person: person })
   };
 };
 
