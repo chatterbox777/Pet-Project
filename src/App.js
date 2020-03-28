@@ -8,19 +8,6 @@ import { connect } from "react-redux";
 import * as axios from "axios";
 
 class App extends React.Component {
-  // increment = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     count: this.state.count + 1
-  //   });
-  // };
-  // decrement = () => {
-  //   this.setState({
-  //     ...this.state,
-  //     count: this.state.count - 1
-  //   });
-  // };
-
   render() {
     return (
       <BrowserRouter>
@@ -153,18 +140,15 @@ class Users extends React.Component {
   };
 
   componentDidMount() {
-    axios
-      .get("https://social-network.samuraijs.com/api/1.0/users")
-      .then(response => {
-        debugger;
-        if (this.state.isloaded == false) {
+    if (this.props.users.length === 0) {
+      axios
+        .get("https://social-network.samuraijs.com/api/1.0/users")
+        .then(response => {
+          debugger;
+
           this.props.addUser(response.data.items);
-        }
-        this.setState({
-          ...this.state,
-          isloaded: true
         });
-      });
+    }
   }
 
   render() {
