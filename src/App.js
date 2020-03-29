@@ -40,7 +40,15 @@ class App extends React.Component {
           <Route
             path="/Users"
             render={() => (
-              <Users addUser={this.props.addUser} users={this.props.users} />
+              <Users
+                addUser={this.props.addUser}
+                users={this.props.users}
+                pageSize={this.props.pageSize}
+                totalUsersCount={this.props.totalUsersCount}
+                currentPage={this.props.currentPage}
+                addCurrentPage={this.props.addCurrentPage}
+                getTotalUsersCount={this.props.getTotalUsersCount}
+              />
             )}
           />
         </div>
@@ -142,18 +150,55 @@ class Users extends React.Component {
   componentDidMount() {
     if (this.props.users.length === 0) {
       axios
-        .get("https://social-network.samuraijs.com/api/1.0/users")
+        .get(
+          `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
+        )
         .then(response => {
           debugger;
 
           this.props.addUser(response.data.items);
+          this.props.getTotalUsersCount(response.data.totalCount);
         });
     }
   }
 
+  changePage = page => {
+    this.props.addCurrentPage(page);
+    axios
+      .get(
+        `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
+      )
+      .then(response => {
+        debugger;
+
+        this.props.addUser(response.data.items);
+      });
+  };
+
   render() {
+    let pagesCount = Math.ceil(
+      this.props.totalUsersCount / this.props.pageSize
+    );
+    console.log(pagesCount);
+    let pages = [];
+    for (let i = 1; i <= pagesCount; i++) {
+      pages.push(i);
+    }
+
     return (
       <div>
+        <div>
+          {pages.map(page => (
+            <span
+              onClick={() => this.changePage(page)}
+              className={
+                this.props.currentPage === page && classTags.selectedPage
+              }
+            >
+              {page}
+            </span>
+          ))}
+        </div>
         <ul>
           {this.props.users.map(user => (
             <li key={user.id}>{user.name}</li>
@@ -169,7 +214,10 @@ const mapStateToProps = state => {
     count: state.reducer.count,
     history: state.reducer.history,
     messages: state.chatReducer.messages,
-    users: state.usersReducer.users
+    users: state.usersReducer.users,
+    pageSize: state.usersReducer.pageSize,
+    totalUsersCount: state.usersReducer.totalUsersCount,
+    currentPage: state.usersReducer.currentPage
   };
 };
 
@@ -181,7 +229,11 @@ const mapDispatchToProps = dispatch => {
     addMessage: value => dispatch({ type: "ADD_MESSAGE", value: value }),
     deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id }),
     deleteHistory: () => dispatch({ type: "DELETE_HISTORY" }),
-    addUser: person => dispatch({ type: "ADD_USER", person: person })
+    addUser: person => dispatch({ type: "ADD_USER", person: person }),
+    addCurrentPage: pageNum =>
+      dispatch({ type: "ADD_CURRENT_PAGE", page: pageNum }),
+    getTotalUsersCount: totalCount =>
+      dispatch({ type: "GET_TOTAL_USERS_COUNT", totalCount: totalCount })
   };
 };
 
