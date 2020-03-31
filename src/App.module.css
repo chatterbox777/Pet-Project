@@ -61,6 +61,17 @@
 .flex h4 {
   margin-top: 20px;
 }
+.hoverEffect {
+  display: unset;
+}
+.hoverEffect span {
+  cursor: pointer;
+}
 .selectedPage {
   color: gold;
+}
+
+.avatar {
+  height: 100px;
+  width: 100px;
 }

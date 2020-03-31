@@ -1,8 +1,9 @@
 let initialState = {
   users: [],
   pageSize: 5,
-  totalUsersCount: 20,
-  currentPage: 1
+  totalUsersCount: 0,
+  currentPage: 1,
+  isFetching: false
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -21,6 +22,11 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         totalUsersCount: action.totalCount
+      };
+    case "FETCHING":
+      return {
+        ...state,
+        isFetching: !state.isFetching
       };
     default:
       return state;
