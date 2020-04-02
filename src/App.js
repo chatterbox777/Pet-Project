@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
@@ -14,7 +14,20 @@ class App extends React.Component {
       <BrowserRouter>
         <div className={classTags.display}>
           <Navbar />
-          <Route path="/Profile" render={() => <Profile />} />
+          <Route
+            path="/Profile"
+            render={() => (
+              <Profile
+                users={this.props.users}
+                isFetched={this.props.isFetched}
+                isFetching={this.props.isFetching}
+                addUser={this.props.addUser}
+                getTotalUsersCount={this.props.getTotalUsersCount}
+                setUserProfile={this.props.setUserProfile}
+                profile={this.props.profile}
+              />
+            )}
+          />
           <Route
             path="/Counter"
             render={() => (
@@ -216,14 +229,16 @@ class Users extends React.Component {
         <ul>
           {this.props.users.map(user => (
             <div>
-              <li key={user.id}>{user.name}</li>
-              <img
-                className={classTags.avatar}
-                src={
-                  user.photos.small === null ? defaultImg : user.photos.small
-                }
-                alt="ava"
-              />
+              <NavLink to={"/Profile/" + user.id}>
+                <li key={user.id}>{user.name}</li>
+                <img
+                  className={classTags.avatar}
+                  src={
+                    user.photos.small === null ? defaultImg : user.photos.small
+                  }
+                  alt="ava"
+                />
+              </NavLink>
             </div>
           ))}
         </ul>
@@ -241,7 +256,8 @@ const mapStateToProps = state => {
     pageSize: state.usersReducer.pageSize,
     totalUsersCount: state.usersReducer.totalUsersCount,
     currentPage: state.usersReducer.currentPage,
-    isFetching: state.usersReducer.isFetching
+    isFetching: state.usersReducer.isFetching,
+    profile: state.usersReducer.profile
   };
 };
 
@@ -258,7 +274,9 @@ const mapDispatchToProps = dispatch => {
       dispatch({ type: "ADD_CURRENT_PAGE", page: pageNum }),
     getTotalUsersCount: totalCount =>
       dispatch({ type: "GET_TOTAL_USERS_COUNT", totalCount: totalCount }),
-    isFetched: () => dispatch({ type: "FETCHING" })
+    isFetched: () => dispatch({ type: "FETCHING" }),
+    setUserProfile: profile =>
+      dispatch({ type: "SET_PROFILE", profile: profile })
   };
 };
 

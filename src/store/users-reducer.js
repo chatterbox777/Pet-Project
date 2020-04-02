@@ -3,7 +3,8 @@ let initialState = {
   pageSize: 5,
   totalUsersCount: 0,
   currentPage: 1,
-  isFetching: false
+  isFetching: false,
+  profile: {}
 };
 
 export const usersReducer = (state = initialState, action) => {
@@ -27,6 +28,11 @@ export const usersReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: !state.isFetching
+      };
+    case "SET_PROFILE":
+      return {
+        ...state,
+        profile: action.profile
       };
     default:
       return state;
