@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div className={classTags.disp}>
       <div>
-        <NavLink to="/Profile" activeClassName={classTags.activeLink}>
+        <NavLink to="/profile" activeClassName={classTags.activeLink}>
           Главная
         </NavLink>
       </div>

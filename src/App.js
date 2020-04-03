@@ -15,7 +15,7 @@ class App extends React.Component {
         <div className={classTags.display}>
           <Navbar />
           <Route
-            path="/Profile"
+            path="/profile/:userId"
             render={() => (
               <Profile
                 users={this.props.users}
@@ -229,7 +229,7 @@ class Users extends React.Component {
         <ul>
           {this.props.users.map(user => (
             <div>
-              <NavLink to={"/Profile/" + user.id}>
+              <NavLink to={"/profile/" + user.id}>
                 <li key={user.id}>{user.name}</li>
                 <img
                   className={classTags.avatar}
@@ -257,7 +257,7 @@ const mapStateToProps = state => {
     totalUsersCount: state.usersReducer.totalUsersCount,
     currentPage: state.usersReducer.currentPage,
     isFetching: state.usersReducer.isFetching,
-    profile: state.usersReducer.profile
+    profile: state.profileReducer.profile
   };
 };
 
