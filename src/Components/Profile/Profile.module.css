@@ -1,1 +1,10 @@
+.name {
+  color: gold;
+}
 
+.lookForJob {
+  color: darkgreen;
+}
+.notLookForJob {
+  color: red;
+}

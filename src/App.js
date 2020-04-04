@@ -7,6 +7,7 @@ import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
 import * as axios from "axios";
 import preloader from "./assets/loader.gif";
+import Paginator from "./Components/Paginator";
 
 class App extends React.Component {
   render() {
@@ -91,7 +92,7 @@ class Form extends React.Component {
         </div>
         <div className={classTags.form}>
           <ul>
-            {this.props.history.map(el => (
+            {this.props.history.map((el) => (
               <li key={el.id}>
                 {el.count}
                 <span
@@ -112,17 +113,17 @@ class Form extends React.Component {
 class Chat extends React.Component {
   state = {
     text: "",
-    id: ""
+    id: "",
   };
 
-  changeInputValue = e => {
+  changeInputValue = (e) => {
     const {
-      target: { value }
+      target: { value },
     } = e;
     this.setState({ text: value, id: Date.now().toString() });
   };
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     console.log(e.target.closest("input"));
     e.preventDefault();
     if (!this.state.text.trim()) {
@@ -136,7 +137,7 @@ class Chat extends React.Component {
       <div className={classTags.disp}>
         <div className={classTags.window}>
           <ul>
-            {this.props.messages.map(item => (
+            {this.props.messages.map((item) => (
               <li key={item.id}>
                 {item.text}
                 <span onClick={() => this.props.deleteMessage(item.id)}>X</span>
@@ -160,7 +161,7 @@ class Chat extends React.Component {
 
 class Users extends React.Component {
   state = {
-    isloaded: false
+    isloaded: false,
   };
 
   componentDidMount() {
@@ -171,7 +172,7 @@ class Users extends React.Component {
         .get(
           `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
         )
-        .then(response => {
+        .then((response) => {
           debugger;
           console.log("запрос пошел");
           this.props.addUser(response.data.items);
@@ -183,14 +184,14 @@ class Users extends React.Component {
     }
   }
 
-  changePage = page => {
+  changePage = (page) => {
     this.props.addCurrentPage(page);
     this.props.isFetched();
     axios
       .get(
         `https://social-network.samuraijs.com/api/1.0/users?page=${page}&count=${this.props.pageSize}`
       )
-      .then(response => {
+      .then((response) => {
         debugger;
 
         this.props.addUser(response.data.items);
@@ -199,35 +200,23 @@ class Users extends React.Component {
   };
 
   render() {
-    let pagesCount = Math.ceil(
-      this.props.totalUsersCount / this.props.pageSize
-    );
-    console.log(pagesCount);
-    let pages = [];
-    for (let i = 1; i <= pagesCount; i++) {
-      pages.push(i);
-    }
-
     let defaultImg =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI2jHcUJxjcFJbmDR2U_MAEcYsgPUmAdk7etV6wSh3P2m39X-c&usqp=CAU";
-
     return (
       <div>
         {this.props.isFetching ? <img src={preloader} /> : null}
-        <div className={classTags.hoverEffect}>
-          {pages.map(page => (
-            <span
-              onClick={() => this.changePage(page)}
-              className={
-                this.props.currentPage === page && classTags.selectedPage
-              }
-            >
-              {page}
-            </span>
-          ))}
-        </div>
+        <Paginator
+          totalUsersCount={this.props.totalUsersCount}
+          pageSize={this.props.pageSize}
+          changePage={this.changePage}
+          currentPage={this.props.currentPage}
+          addCurrentPage={this.props.addCurrentPage}
+          isFetched={this.props.isFetched}
+          addUser={this.props.addUser}
+          portionSize={10}
+        />
         <ul>
-          {this.props.users.map(user => (
+          {this.props.users.map((user) => (
             <div>
               <NavLink to={"/profile/" + user.id}>
                 <li key={user.id}>{user.name}</li>
@@ -247,7 +236,7 @@ class Users extends React.Component {
   }
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     count: state.reducer.count,
     history: state.reducer.history,
@@ -257,26 +246,26 @@ const mapStateToProps = state => {
     totalUsersCount: state.usersReducer.totalUsersCount,
     currentPage: state.usersReducer.currentPage,
     isFetching: state.usersReducer.isFetching,
-    profile: state.profileReducer.profile
+    profile: state.profileReducer.profile,
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     increment: () => dispatch({ type: "INCREMENT", value: 1 }),
     decrement: () => dispatch({ type: "DECREMENT", value: 1 }),
-    onDeleteItem: id => dispatch({ type: "DELETE_ITEM", key: id }),
-    addMessage: value => dispatch({ type: "ADD_MESSAGE", value: value }),
-    deleteMessage: id => dispatch({ type: "DELETE_MESSAGE", key: id }),
+    onDeleteItem: (id) => dispatch({ type: "DELETE_ITEM", key: id }),
+    addMessage: (value) => dispatch({ type: "ADD_MESSAGE", value: value }),
+    deleteMessage: (id) => dispatch({ type: "DELETE_MESSAGE", key: id }),
     deleteHistory: () => dispatch({ type: "DELETE_HISTORY" }),
-    addUser: person => dispatch({ type: "ADD_USER", person: person }),
-    addCurrentPage: pageNum =>
+    addUser: (person) => dispatch({ type: "ADD_USER", person: person }),
+    addCurrentPage: (pageNum) =>
       dispatch({ type: "ADD_CURRENT_PAGE", page: pageNum }),
-    getTotalUsersCount: totalCount =>
+    getTotalUsersCount: (totalCount) =>
       dispatch({ type: "GET_TOTAL_USERS_COUNT", totalCount: totalCount }),
     isFetched: () => dispatch({ type: "FETCHING" }),
-    setUserProfile: profile =>
-      dispatch({ type: "SET_PROFILE", profile: profile })
+    setUserProfile: (profile) =>
+      dispatch({ type: "SET_PROFILE", profile: profile }),
   };
 };
 
