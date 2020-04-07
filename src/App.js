@@ -8,6 +8,7 @@ import { connect } from "react-redux";
 import * as axios from "axios";
 import preloader from "./assets/loader.gif";
 import Paginator from "./Components/Paginator";
+import Login from "./Components/Login";
 
 class App extends React.Component {
   render() {
@@ -65,8 +66,15 @@ class App extends React.Component {
                 getTotalUsersCount={this.props.getTotalUsersCount}
                 isFetched={this.props.isFetched}
                 isFetching={this.props.isFetching}
+                followed={this.props.followed}
+                follow={this.props.follow}
               />
             )}
+          />
+          <Login
+            auth={this.props.auth}
+            login={this.props.login}
+            isAuth={this.props.isAuth}
           />
         </div>
       </BrowserRouter>
@@ -176,6 +184,7 @@ class Users extends React.Component {
           debugger;
           console.log("запрос пошел");
           this.props.addUser(response.data.items);
+          debugger;
           console.log("получили юзеров");
           this.props.getTotalUsersCount(response.data.totalCount);
           console.log("получили тоталКаунт юзеров");
@@ -199,6 +208,26 @@ class Users extends React.Component {
       });
   };
 
+  followUser = (id) => {
+    axios
+      .post(
+        `https://social-network.samuraijs.com/api/1.0/users/follow/${id}`,
+        {},
+        {
+          withCredentials: true,
+          headers: {
+            "API-KEY": "8d9bd45d-58a9-43ac-8b78-2c71c9e79611",
+          },
+        }
+      )
+      .then((response) => {
+        debugger;
+        if (response.data.resultCode == 1) {
+          this.props.follow(response.data.resultCode);
+        }
+      });
+  };
+
   render() {
     let defaultImg =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI2jHcUJxjcFJbmDR2U_MAEcYsgPUmAdk7etV6wSh3P2m39X-c&usqp=CAU";
@@ -218,7 +247,10 @@ class Users extends React.Component {
         <ul>
           {this.props.users.map((user) => (
             <div>
-              <NavLink to={"/profile/" + user.id}>
+              <NavLink
+                className={classTags.flex_column}
+                to={"/profile/" + user.id}
+              >
                 <li key={user.id}>{user.name}</li>
                 <img
                   className={classTags.avatar}
@@ -228,6 +260,9 @@ class Users extends React.Component {
                   alt="ava"
                 />
               </NavLink>
+              <button onClick={() => this.followUser(user.id)}>
+                {this.props.followed === 1 ? "Unfollow" : "Follow"}
+              </button>
             </div>
           ))}
         </ul>
@@ -247,6 +282,9 @@ const mapStateToProps = (state) => {
     currentPage: state.usersReducer.currentPage,
     isFetching: state.usersReducer.isFetching,
     profile: state.profileReducer.profile,
+    followed: state.usersReducer.followed,
+    login: state.authReducer.login,
+    isAuth: state.authReducer.isAuth,
   };
 };
 
@@ -266,6 +304,9 @@ const mapDispatchToProps = (dispatch) => {
     isFetched: () => dispatch({ type: "FETCHING" }),
     setUserProfile: (profile) =>
       dispatch({ type: "SET_PROFILE", profile: profile }),
+    follow: (result) => dispatch({ type: "FOLLOWING", result: result }),
+    auth: (data, auth) =>
+      dispatch({ type: "AUTHORIZE", data: data, auth: auth }),
   };
 };
 

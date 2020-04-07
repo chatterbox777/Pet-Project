@@ -1,5 +1,6 @@
 .display {
   display: flex;
+  justify-content: space-between;
   background: grey;
 }
 
@@ -74,4 +75,9 @@
 .avatar {
   height: 100px;
   width: 100px;
+}
+
+.flex_column {
+  display: flex;
+  flex-direction: column;
 }
