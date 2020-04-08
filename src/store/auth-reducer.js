@@ -4,6 +4,7 @@ let initialState = {
   login: "",
   isAuth: false,
   isFetching: false,
+  photo: "",
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -15,6 +16,11 @@ export const authReducer = (state = initialState, action) => {
         email: action.data.email,
         login: action.data.login,
         isAuth: action.auth,
+      };
+    case "LOGIN_PHOTO":
+      return {
+        ...state,
+        photo: action.photo,
       };
 
     default:

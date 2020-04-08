@@ -75,6 +75,9 @@ class App extends React.Component {
             auth={this.props.auth}
             login={this.props.login}
             isAuth={this.props.isAuth}
+            id={this.props.id}
+            photo={this.props.photo}
+            loginPhoto={this.props.loginPhoto}
           />
         </div>
       </BrowserRouter>
@@ -181,10 +184,9 @@ class Users extends React.Component {
           `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
         )
         .then((response) => {
-          debugger;
           console.log("запрос пошел");
           this.props.addUser(response.data.items);
-          debugger;
+
           console.log("получили юзеров");
           this.props.getTotalUsersCount(response.data.totalCount);
           console.log("получили тоталКаунт юзеров");
@@ -285,6 +287,8 @@ const mapStateToProps = (state) => {
     followed: state.usersReducer.followed,
     login: state.authReducer.login,
     isAuth: state.authReducer.isAuth,
+    id: state.authReducer.id,
+    photo: state.authReducer.photo,
   };
 };
 
@@ -307,6 +311,7 @@ const mapDispatchToProps = (dispatch) => {
     follow: (result) => dispatch({ type: "FOLLOWING", result: result }),
     auth: (data, auth) =>
       dispatch({ type: "AUTHORIZE", data: data, auth: auth }),
+    loginPhoto: (photo) => dispatch({ type: "LOGIN_PHOTO", photo: photo }),
   };
 };
 
