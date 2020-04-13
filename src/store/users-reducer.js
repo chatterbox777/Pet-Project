@@ -32,7 +32,7 @@ export const usersReducer = (state = initialState, action) => {
     case "FOLLOWING":
       return {
         ...state,
-        followed: state.followed + action.result,
+        followed: action.result,
       };
 
     default:

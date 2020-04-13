@@ -11,13 +11,9 @@ let Paginator = (props) => {
 
   let [portionNumber, setPortionNumber] = useState(1);
 
-  debugger;
   let leftPagePortionNumber = (portionNumber - 1) * props.portionSize + 1;
 
-  debugger;
   let rightPagePortionNumber = portionNumber * props.portionSize;
-
-  debugger;
 
   return (
     <div className={classTags.hoverEffect}>
@@ -25,7 +21,6 @@ let Paginator = (props) => {
         <button
           onClick={() => {
             setPortionNumber(portionNumber - 1);
-            debugger;
           }}
         >
           Prev
@@ -47,7 +42,6 @@ let Paginator = (props) => {
       <button
         onClick={() => {
           setPortionNumber(portionNumber + 1);
-          debugger;
         }}
       >
         Next

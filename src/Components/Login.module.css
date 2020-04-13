@@ -1,6 +1,6 @@
 .disp {
   display: flex;
-  flex-direction: column-reverse;
+  flex-direction: column;
   text-align: right;
   height: 0%;
 }

@@ -9,6 +9,7 @@ import * as axios from "axios";
 import preloader from "./assets/loader.gif";
 import Paginator from "./Components/Paginator";
 import Login from "./Components/Login";
+import LoginForm from "./Components/LoginForm";
 
 class App extends React.Component {
   render() {
@@ -184,6 +185,7 @@ class Users extends React.Component {
           `https://social-network.samuraijs.com/api/1.0/users?page=${this.props.currentPage}&count=${this.props.pageSize}`
         )
         .then((response) => {
+          debugger;
           console.log("запрос пошел");
           this.props.addUser(response.data.items);
 
@@ -224,7 +226,7 @@ class Users extends React.Component {
       )
       .then((response) => {
         debugger;
-        if (response.data.resultCode == 1) {
+        if (response.data.resultCode === 1) {
           this.props.follow(response.data.resultCode);
         }
       });
@@ -233,6 +235,7 @@ class Users extends React.Component {
   render() {
     let defaultImg =
       "https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQI2jHcUJxjcFJbmDR2U_MAEcYsgPUmAdk7etV6wSh3P2m39X-c&usqp=CAU";
+
     return (
       <div>
         {this.props.isFetching ? <img src={preloader} /> : null}
@@ -275,8 +278,8 @@ class Users extends React.Component {
 
 const mapStateToProps = (state) => {
   return {
-    count: state.reducer.count,
-    history: state.reducer.history,
+    count: state.mainReducer.count,
+    history: state.mainReducer.history,
     messages: state.chatReducer.messages,
     users: state.usersReducer.users,
     pageSize: state.usersReducer.pageSize,

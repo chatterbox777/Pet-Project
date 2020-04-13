@@ -1,8 +1,9 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, BrowserRouter, Route } from "react-router-dom";
 import * as axios from "axios";
 import ava from "../assets/Din.jpg";
 import classTags from "./Login.module.css";
+import LoginReduxForm from "./LoginForm";
 
 class Login extends React.Component {
   componentDidMount() {
@@ -11,9 +12,9 @@ class Login extends React.Component {
         withCredentials: true,
       })
       .then((response) => {
-        debugger;
         if (response.data.resultCode === 0) {
-          this.props.auth(response.data.data);
+          debugger;
+          this.props.auth(response.data.data, true);
         }
       });
   }
@@ -23,29 +24,54 @@ class Login extends React.Component {
         `https://social-network.samuraijs.com/api/1.0/profile/` + this.props.id
       )
       .then((response) => {
-        debugger;
         this.props.loginPhoto(response.data.photos.small);
       });
   }
 
   render() {
+    debugger;
     return (
-      <div className={classTags.disp}>
-        <NavLink to="/login">
-          {!this.props.login ? "Login" : this.props.login}
-        </NavLink>
-        {this.props.login ? (
-          <button onClick={() => this.sendLoginPhoto()}>Получить фото</button>
-        ) : null}
+      <BrowserRouter>
+        <div className={classTags.disp}>
+          <NavLink to="/Login">
+            {!this.props.login ? "Login" : this.props.login}
+          </NavLink>
+          {this.props.login ? (
+            <button onClick={() => this.sendLoginPhoto()}>Получить фото</button>
+          ) : null}
 
-        {this.props.login ? (
-          <img
-            className={classTags.defaultImg}
-            src={!this.props.photo ? ava : this.props.photo}
-            alt="avatar"
-          />
-        ) : null}
-      </div>
+          {this.props.login ? (
+            <img
+              className={classTags.defaultImg}
+              src={!this.props.photo ? ava : this.props.photo}
+              alt="avatar"
+            />
+          ) : null}
+          {this.props.login ? (
+            <form>
+              {" "}
+              <button>{this.props.isAuth ? "Log out" : ""}</button>
+            </form>
+          ) : null}
+          <div>
+            {!this.props.isAuth ? (
+              <Route
+                path="/Login"
+                render={() => (
+                  <LoginReduxForm
+                    auth={this.props.auth}
+                    login={this.props.login}
+                    isAuth={this.props.isAuth}
+                    id={this.props.id}
+                    photo={this.props.photo}
+                    loginPhoto={this.props.loginPhoto}
+                  />
+                )}
+              />
+            ) : null}
+          </div>
+        </div>
+      </BrowserRouter>
     );
   }
 }

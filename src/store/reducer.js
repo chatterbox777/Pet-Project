@@ -3,13 +3,14 @@ import { chatReducer } from "../store/chat-reducer";
 import { usersReducer } from "./users-reducer";
 import { profileReducer } from "./profile-reducer";
 import { authReducer } from "./auth-reducer";
+import { reducer as formReducer } from "redux-form";
 
 let initialState = {
   count: 0,
   history: [],
 };
 
-const reducer = (state = initialState, action) => {
+const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENT":
       return {
@@ -48,9 +49,10 @@ const reducer = (state = initialState, action) => {
 };
 
 export default combineReducers({
-  reducer,
+  mainReducer,
   chatReducer,
   usersReducer,
   profileReducer,
   authReducer,
+  formReducer,
 });
