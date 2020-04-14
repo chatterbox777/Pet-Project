@@ -9,7 +9,6 @@ import * as axios from "axios";
 import preloader from "./assets/loader.gif";
 import Paginator from "./Components/Paginator";
 import Login from "./Components/Login";
-import LoginForm from "./Components/LoginForm";
 
 class App extends React.Component {
   render() {
@@ -238,7 +237,9 @@ class Users extends React.Component {
 
     return (
       <div>
-        {this.props.isFetching ? <img src={preloader} /> : null}
+        {this.props.isFetching ? (
+          <img src={preloader} alt={"preloader"} />
+        ) : null}
         <Paginator
           totalUsersCount={this.props.totalUsersCount}
           pageSize={this.props.pageSize}

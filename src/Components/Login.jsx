@@ -29,7 +29,11 @@ class Login extends React.Component {
   }
 
   render() {
+    const onSubmit = (formData) => {
+      console.log(formData);
+    };
     debugger;
+
     return (
       <BrowserRouter>
         <div className={classTags.disp}>
@@ -65,6 +69,7 @@ class Login extends React.Component {
                     id={this.props.id}
                     photo={this.props.photo}
                     loginPhoto={this.props.loginPhoto}
+                    onSubmit={onSubmit}
                   />
                 )}
               />

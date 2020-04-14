@@ -10,7 +10,7 @@ let initialState = {
   history: [],
 };
 
-const mainReducer = (state = initialState, action) => {
+export const mainReducer = (state = initialState, action) => {
   switch (action.type) {
     case "INCREMENT":
       return {
@@ -54,5 +54,5 @@ export default combineReducers({
   usersReducer,
   profileReducer,
   authReducer,
-  formReducer,
+  form: formReducer,
 });

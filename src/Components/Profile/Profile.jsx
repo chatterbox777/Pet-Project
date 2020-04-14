@@ -24,7 +24,7 @@ class Profile extends React.Component {
     if (!this.props.profile) {
       return (
         <div>
-          <img src={preloader} />
+          <img src={preloader} alt="preloader" />
         </div>
       );
     }
@@ -41,6 +41,7 @@ class Profile extends React.Component {
               ? defImgAvatar
               : this.props.profile.photos.large
           }
+          alt="avatar_large"
         />
         <p>
           VK:{" "}
