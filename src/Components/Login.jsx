@@ -12,8 +12,8 @@ class Login extends React.Component {
         withCredentials: true,
       })
       .then((response) => {
+        debugger;
         if (response.data.resultCode === 0) {
-          debugger;
           this.props.auth(response.data.data, true);
         }
       });
@@ -31,6 +31,28 @@ class Login extends React.Component {
   render() {
     const onSubmit = (formData) => {
       console.log(formData);
+      axios
+        .post(`https://social-network.samuraijs.com/api/1.0/auth/login`, {
+          email: formData.login,
+          password: formData.password,
+        })
+        .then((response) => {
+          debugger;
+          console.log(response);
+          if (response.data.resultCode === 0) {
+            axios
+              .get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
+                withCredentials: true,
+              })
+              .then((response) => {
+                debugger;
+                if (response.data.resultCode === 0) {
+                  this.props.auth(response.data.data, true);
+                }
+              });
+          }
+          return null;
+        });
     };
     debugger;
 

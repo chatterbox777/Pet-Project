@@ -19,6 +19,7 @@ const LoginForm = (props) => {
             name={"password"}
             component={"input"}
             placeholder={"Введите пароль"}
+            type="password"
           />
         </div>
         <div>
