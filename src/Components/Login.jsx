@@ -28,6 +28,19 @@ class Login extends React.Component {
       });
   }
 
+  logOut(e) {
+    e.preventDefault();
+    axios
+      .delete(`https://social-network.samuraijs.com/api/1.0/auth/login`)
+      .then((response) => {
+        debugger;
+        if (response.data.resultCode === 0) {
+          this.props.auth(null, false);
+        }
+        return null;
+      });
+  }
+
   render() {
     const onSubmit = (formData) => {
       console.log(formData);
@@ -43,6 +56,9 @@ class Login extends React.Component {
             axios
               .get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
                 withCredentials: true,
+                headers: {
+                  "API-KEY": "8d9bd45d-58a9-43ac-8b78-2c71c9e79611",
+                },
               })
               .then((response) => {
                 debugger;
@@ -76,7 +92,9 @@ class Login extends React.Component {
           {this.props.login ? (
             <form>
               {" "}
-              <button>{this.props.isAuth ? "Log out" : ""}</button>
+              <button onClick={() => this.logOut()}>
+                {this.props.isAuth ? "Log out" : ""}
+              </button>
             </form>
           ) : null}
           <div>
