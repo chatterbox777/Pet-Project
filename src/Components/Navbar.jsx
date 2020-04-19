@@ -24,6 +24,11 @@ const Navbar = () => {
           Чат
         </NavLink>
       </div>
+      <div>
+        <NavLink to="/Youtube" activeClassName={classTags.activeLink}>
+          Youtube
+        </NavLink>
+      </div>
     </div>
   );
 };

@@ -9,6 +9,7 @@ import Login from "./Components/Login";
 import Form from "./Components/Counter/Form";
 import Chat from "./Components/Chat/Chat";
 import Users from "./Components/Users/Users";
+import Youtube from "./Components/Youtube/Youtube";
 
 class App extends React.Component {
   render() {
@@ -71,6 +72,7 @@ class App extends React.Component {
               />
             )}
           />
+          <Route path="/Youtube" render={() => <Youtube />} />
           <Login
             auth={this.props.auth}
             login={this.props.login}
