@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route } from "react-router-dom";
+import { BrowserRouter, Route, NavLink } from "react-router-dom";
 import "./App.css";
 import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
@@ -10,6 +10,8 @@ import Form from "./Components/Counter/Form";
 import Chat from "./Components/Chat/Chat";
 import Users from "./Components/Users/Users";
 import Youtube from "./Components/Youtube/Youtube";
+import Basket from "./Components/Busket/Basket";
+import InBasket from "./Components/Busket/InBasket";
 
 class App extends React.Component {
   render() {
@@ -73,6 +75,16 @@ class App extends React.Component {
             )}
           />
           <Route path="/Youtube" render={() => <Youtube />} />
+          <Route
+            path="/Basket"
+            render={() => (
+              <Basket
+                items={this.props.basketItems}
+                onButtonBasket={this.props.addItemToBasket}
+              />
+            )}
+          />
+          <Route path="/InBasket" render={() => <InBasket />} />
           <Login
             auth={this.props.auth}
             login={this.props.login}
@@ -103,6 +115,7 @@ const mapStateToProps = (state) => {
     isAuth: state.authReducer.isAuth,
     id: state.authReducer.id,
     photo: state.authReducer.photo,
+    basketItems: state.basketReducer.basketItems,
   };
 };
 
@@ -126,6 +139,7 @@ const mapDispatchToProps = (dispatch) => {
     auth: (data, auth) =>
       dispatch({ type: "AUTHORIZE", data: data, auth: auth }),
     loginPhoto: (photo) => dispatch({ type: "LOGIN_PHOTO", photo: photo }),
+    addItemToBasket: (e, id) => dispatch({ type: "ADD_BASKET", e: e, id: id }),
   };
 };
 

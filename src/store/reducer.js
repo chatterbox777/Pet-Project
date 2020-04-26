@@ -3,6 +3,7 @@ import { chatReducer } from "../store/chat-reducer";
 import { usersReducer } from "./users-reducer";
 import { profileReducer } from "./profile-reducer";
 import { authReducer } from "./auth-reducer";
+import { basketReducer } from "./basket-reducer";
 import { reducer as formReducer } from "redux-form";
 
 let initialState = {
@@ -55,4 +56,5 @@ export default combineReducers({
   profileReducer,
   authReducer,
   form: formReducer,
+  basketReducer,
 });

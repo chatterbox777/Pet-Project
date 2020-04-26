@@ -7,10 +7,10 @@ const VideoDetail = ({ video }) => {
   console.log(video);
   return (
     <div>
-      <Paper elevation={6} style={{ height: "70%" }}>
+      <Paper elevation={12} style={{ height: "70%" }}>
         <iframe
           frameBorder="0"
-          height="100%"
+          height="400px"
           width="100%"
           title="Video Player"
           src={videoSrc}

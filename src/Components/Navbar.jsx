@@ -29,6 +29,11 @@ const Navbar = () => {
           Youtube
         </NavLink>
       </div>
+      <div>
+        <NavLink to="/Basket" activeClassName={classTags.activeLink}>
+          Basket
+        </NavLink>
+      </div>
     </div>
   );
 };

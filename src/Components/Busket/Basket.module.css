@@ -1,0 +1,32 @@
+.dis a {
+  margin-left: 90%;
+}
+
+.disp {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  max-width: 100%;
+  flex-wrap: wrap;
+}
+.disp li {
+  list-style-type: none;
+  flex-basis: 33.3%;
+  margin-top: 4%;
+}
+
+.disp h3 {
+  max-width: 50%;
+}
+.disp button {
+  position: relative;
+  left: 15%;
+  transform: translate(-15%, 0);
+}
+.disp img {
+  min-width: 40%;
+  max-width: 0;
+}
+.disp li div {
+  margin-left: 20%;
+}
