@@ -50,9 +50,9 @@ export const basketReducer = (state = initialState, action) => {
     case "ADD_BASKET":
       return {
         ...state,
-        ...(state.basketItems[action.id - 1].clicked = !state.basketItems[
-          action.id - 1
-        ].clicked),
+        basketItems: state.basketItems.map((n) =>
+          n.BasketItemId === action.id ? { ...n, clicked: !n.clicked } : n
+        ),
       };
 
     default:

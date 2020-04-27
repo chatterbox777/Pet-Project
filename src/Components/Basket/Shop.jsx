@@ -20,7 +20,7 @@ class Shop extends React.Component {
                       this.props.onButtonBasket(e, item.BasketItemId)
                     }
                   >
-                    Купить
+                    {item.clicked ? "Товар добавлен" : "Купить"}
                   </button>
                 </div>
               </li>
