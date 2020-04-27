@@ -10,8 +10,8 @@ import Form from "./Components/Counter/Form";
 import Chat from "./Components/Chat/Chat";
 import Users from "./Components/Users/Users";
 import Youtube from "./Components/Youtube/Youtube";
-import Basket from "./Components/Busket/Basket";
-import InBasket from "./Components/Busket/InBasket";
+import Shop from "./Components/Basket/Shop";
+import InBasket from "./Components/Basket/InBasket";
 
 class App extends React.Component {
   render() {
@@ -19,6 +19,7 @@ class App extends React.Component {
       <BrowserRouter>
         <div className={classTags.display}>
           <Navbar />
+
           <Route
             path="/profile/:userId"
             render={() => (
@@ -76,15 +77,23 @@ class App extends React.Component {
           />
           <Route path="/Youtube" render={() => <Youtube />} />
           <Route
-            path="/Basket"
+            path="/Shop"
             render={() => (
-              <Basket
+              <Shop
                 items={this.props.basketItems}
                 onButtonBasket={this.props.addItemToBasket}
               />
             )}
           />
-          <Route path="/InBasket" render={() => <InBasket />} />
+          <Route
+            path="/InBasket"
+            render={() => (
+              <InBasket
+                items={this.props.basketItems}
+                onButtonBasket={this.props.addItemToBasket}
+              />
+            )}
+          />
           <Login
             auth={this.props.auth}
             login={this.props.login}
@@ -139,7 +148,8 @@ const mapDispatchToProps = (dispatch) => {
     auth: (data, auth) =>
       dispatch({ type: "AUTHORIZE", data: data, auth: auth }),
     loginPhoto: (photo) => dispatch({ type: "LOGIN_PHOTO", photo: photo }),
-    addItemToBasket: (e, id) => dispatch({ type: "ADD_BASKET", e: e, id: id }),
+    addItemToBasket: (e, id) =>
+      dispatch({ type: "ADD_BASKET", e: e.persist(), id: id }),
   };
 };
 

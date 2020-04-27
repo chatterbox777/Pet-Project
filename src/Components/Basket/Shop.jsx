@@ -1,15 +1,14 @@
 import React from "react";
 
-import classTags from "./Basket.module.css";
+import classTags from "./Shop.module.css";
 import { Route, BrowserRouter, NavLink } from "react-router-dom";
 import InBasket from "./InBasket";
 
-class Basket extends React.Component {
+class Shop extends React.Component {
   render() {
     return (
       <BrowserRouter>
         <div className={classTags.dis}>
-          <NavLink to="/InBasket">Корзина </NavLink>
           <ul className={classTags.disp}>
             {this.props.items.map((item) => (
               <li key={item.BasketItemId}>
@@ -32,4 +31,4 @@ class Basket extends React.Component {
     );
   }
 }
-export default Basket;
+export default Shop;

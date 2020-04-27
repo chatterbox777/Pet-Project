@@ -30,9 +30,12 @@ const Navbar = () => {
         </NavLink>
       </div>
       <div>
-        <NavLink to="/Basket" activeClassName={classTags.activeLink}>
-          Basket
+        <NavLink to="/Shop" activeClassName={classTags.activeLink}>
+          Shop
         </NavLink>
+      </div>
+      <div>
+        <NavLink to="/InBasket">Корзина </NavLink>
       </div>
     </div>
   );
