@@ -82,6 +82,7 @@ class App extends React.Component {
               <Shop
                 items={this.props.basketItems}
                 onButtonBasket={this.props.addItemToBasket}
+                sortPrice={this.props.sortPrice}
               />
             )}
           />
@@ -150,6 +151,7 @@ const mapDispatchToProps = (dispatch) => {
     loginPhoto: (photo) => dispatch({ type: "LOGIN_PHOTO", photo: photo }),
     addItemToBasket: (e, id) =>
       dispatch({ type: "ADD_BASKET", e: e.persist(), id: id }),
+    sortPrice: () => dispatch({ type: "SORT_PRICE" }),
   };
 };
 

@@ -3,7 +3,6 @@
 }
 
 .disp {
-  display: flex;
   flex-direction: row;
   justify-content: space-around;
   max-width: 100%;
@@ -29,4 +28,19 @@
 }
 .disp li div {
   margin-left: 20%;
+}
+
+.lowPrice {
+  color: green;
+}
+
+.mediumPrice {
+  color: yellow;
+}
+
+.highPrice {
+  color: red;
+}
+.flex_basis span {
+  margin-left: 10px;
 }
