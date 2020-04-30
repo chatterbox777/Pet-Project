@@ -10,8 +10,11 @@ class Shop extends React.Component {
     return (
       <BrowserRouter>
         <div className={classTags.dis}>
-          <button onClick={() => this.props.sortPrice()}>
-            отсортировать по цене
+          <button onClick={() => this.props.sortPriceAsc()}>
+            отсортировать по возрастанию цены
+          </button>
+          <button onClick={() => this.props.sortPriceDesc()}>
+            отсортировать по убыванию цены
           </button>
           <ul className={classTags.disp}>
             {this.props.items.map((item) => (

@@ -63,11 +63,17 @@ export const basketReducer = (state = initialState, action) => {
             : item
         ),
       };
-    case "SORT_PRICE":
-      return {
-        ...state,
-        basketItems: state.basketItems.sort((a, b) => a.price - b.price),
-      };
+    case "SORT_PRICE_ASC":
+      let stateCopyAsc = { ...state };
+      stateCopyAsc.basketItems = [...state.basketItems];
+      stateCopyAsc.basketItems.sort((a, b) => a.price - b.price);
+      return stateCopyAsc;
+
+    case "SORT_PRICE_DESC":
+      let stateCopyDesc = { ...state };
+      stateCopyDesc.basketItems = [...state.basketItems];
+      stateCopyDesc.basketItems.sort((a, b) => b.price - a.price);
+      return stateCopyDesc;
 
     default:
       return state;
