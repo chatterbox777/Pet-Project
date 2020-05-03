@@ -52,7 +52,6 @@ let initialState = {
 };
 
 export const basketReducer = (state = initialState, action) => {
-  debugger;
   switch (action.type) {
     case "ADD_BASKET":
       return {

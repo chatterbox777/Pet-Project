@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink, BrowserRouter, Route } from "react-router-dom";
 import * as axios from "axios";
-import ava from "../assets/Din.jpg";
+import ava from "../../assets/Din.jpg";
 import classTags from "./Login.module.css";
 import LoginReduxForm from "./LoginForm";
 

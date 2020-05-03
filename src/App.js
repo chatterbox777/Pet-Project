@@ -5,7 +5,7 @@ import Navbar from "./Components/Navbar";
 import Profile from "./Components/Profile/Profile";
 import classTags from "../src/App.module.css";
 import { connect } from "react-redux";
-import Login from "./Components/Login";
+import Login from "./Components/Login/Login";
 import Form from "./Components/Counter/Form";
 import Chat from "./Components/Chat/Chat";
 import Users from "./Components/Users/Users";

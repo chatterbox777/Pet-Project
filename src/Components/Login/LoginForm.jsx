@@ -1,17 +1,23 @@
 import React from "react";
 import classTags from "./LoginForm.module.css";
 import { reduxForm, Field } from "redux-form";
+import { requiredField, maxLengthCreator } from "../../Validation/validator";
+import { Input } from "../FormControls/input";
+
+const maxLength5 = maxLengthCreator(5);
 
 const LoginForm = (props) => {
   const { handleSubmit } = props;
+
   return (
     <div className={classTags.align}>
       <form onSubmit={handleSubmit} className={classTags.block} action="">
         <div>
           <Field
             name={"login"}
-            component={"input"}
+            component={Input}
             placeholder={"Введите логин"}
+            validate={[requiredField, maxLength5]}
           />
         </div>
         <div>
