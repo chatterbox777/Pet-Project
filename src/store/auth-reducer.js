@@ -22,7 +22,11 @@ export const authReducer = (state = initialState, action) => {
         ...state,
         photo: action.photo,
       };
-
+    case "FETCHING_AUTH":
+      return {
+        ...state,
+        isFetching: action.fetch,
+      };
     default:
       return state;
   }

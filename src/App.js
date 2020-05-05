@@ -103,6 +103,8 @@ class App extends React.Component {
             id={this.props.id}
             photo={this.props.photo}
             loginPhoto={this.props.loginPhoto}
+            isFetchingAuth={this.props.isFetchingAuth}
+            fetchAuth={this.props.fetchAuth}
           />
         </div>
       </BrowserRouter>
@@ -127,6 +129,7 @@ const mapStateToProps = (state) => {
     id: state.authReducer.id,
     photo: state.authReducer.photo,
     basketItems: state.basketReducer.basketItems,
+    isFetchingAuth: state.authReducer.isFetching,
   };
 };
 
@@ -154,6 +157,7 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({ type: "ADD_BASKET", e: e.persist(), id: id }),
     sortPriceAsc: () => dispatch({ type: "SORT_PRICE_ASC" }),
     sortPriceDesc: () => dispatch({ type: "SORT_PRICE_DESC" }),
+    fetchAuth: (boolean) => dispatch({ type: "FETCHING_AUTH", fetch: boolean }),
   };
 };
 

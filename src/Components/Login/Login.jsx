@@ -49,6 +49,7 @@ class Login extends React.Component {
   render() {
     const onSubmit = (formData) => {
       console.log(formData);
+      this.props.fetchAuth(true);
       axios
         .post(
           `https://social-network.samuraijs.com/api/1.0/auth/login`,
@@ -80,6 +81,7 @@ class Login extends React.Component {
                 if (response.data.resultCode === 0) {
                   this.props.auth(response.data.data, true);
                 }
+                this.props.fetchAuth(false);
               });
           }
           return null;
@@ -122,6 +124,7 @@ class Login extends React.Component {
                     photo={this.props.photo}
                     loginPhoto={this.props.loginPhoto}
                     onSubmit={onSubmit}
+                    isFetchingAuth={this.props.isFetchingAuth}
                   />
                 )}
               />

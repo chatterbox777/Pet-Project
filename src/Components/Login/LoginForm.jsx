@@ -4,6 +4,7 @@ import { reduxForm, Field } from "redux-form";
 import { requiredField, maxLengthCreator } from "../../Validation/validator";
 import { InputLogin } from "../FormControls/inputLogin";
 import { InputPass } from "../FormControls/inputPassword";
+import preloader from "../../assets/loader.gif";
 
 const maxLength30 = maxLengthCreator(30);
 
@@ -12,36 +13,40 @@ const LoginForm = (props) => {
 
   return (
     <div className={classTags.align}>
-      <form onSubmit={handleSubmit} className={classTags.block} action="">
-        <div>
-          <Field
-            name={"login"}
-            component={InputLogin}
-            placeholder={"Введите логин"}
-            validate={[requiredField, maxLength30]}
-          />
-        </div>
-        <div>
-          <Field
-            name={"password"}
-            component={InputPass}
-            placeholder={"Введите пароль"}
-            type="password"
-            validate={[requiredField, maxLength30]}
-          />
-        </div>
-        <div>
-          <Field
-            name={"rememberMeCheckBox"}
-            type="checkbox"
-            component={"input"}
-          />{" "}
-          remember me
-        </div>
-        <div>
-          <button>sign in</button>
-        </div>
-      </form>
+      {props.isFetchingAuth ? (
+        <img src={preloader} alt={"preloader"} />
+      ) : (
+        <form onSubmit={handleSubmit} className={classTags.block} action="">
+          <div>
+            <Field
+              name={"login"}
+              component={InputLogin}
+              placeholder={"Введите логин"}
+              validate={[requiredField, maxLength30]}
+            />
+          </div>
+          <div>
+            <Field
+              name={"password"}
+              component={InputPass}
+              placeholder={"Введите пароль"}
+              type="password"
+              validate={[requiredField, maxLength30]}
+            />
+          </div>
+          <div>
+            <Field
+              name={"rememberMeCheckBox"}
+              type="checkbox"
+              component={"input"}
+            />{" "}
+            remember me
+          </div>
+          <div>
+            <button>sign in</button>
+          </div>
+        </form>
+      )}
     </div>
   );
 };
