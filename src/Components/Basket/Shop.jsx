@@ -1,8 +1,7 @@
 import React from "react";
 
 import classTags from "./Shop.module.css";
-import { Route, BrowserRouter, NavLink } from "react-router-dom";
-import InBasket from "./InBasket";
+import { BrowserRouter } from "react-router-dom";
 
 class Shop extends React.Component {
   render() {

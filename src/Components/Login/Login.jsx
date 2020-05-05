@@ -31,13 +31,18 @@ class Login extends React.Component {
   logOut(e) {
     e.preventDefault();
     axios
-      .delete(`https://social-network.samuraijs.com/api/1.0/auth/login`)
+      .delete(`https://social-network.samuraijs.com/api/1.0/auth/login`, {
+        withCredentials: true,
+        headers: {
+          "API-KEY": "8d9bd45d-58a9-43ac-8b78-2c71c9e79611",
+        },
+      })
       .then((response) => {
         debugger;
         if (response.data.resultCode === 0) {
-          this.props.auth(null, false);
+          this.props.auth("", false);
         }
-        return null;
+        return "";
       });
   }
 
@@ -45,14 +50,24 @@ class Login extends React.Component {
     const onSubmit = (formData) => {
       console.log(formData);
       axios
-        .post(`https://social-network.samuraijs.com/api/1.0/auth/login`, {
-          email: formData.login,
-          password: formData.password,
-        })
+        .post(
+          `https://social-network.samuraijs.com/api/1.0/auth/login`,
+          {
+            email: formData.login,
+            password: formData.password,
+          },
+          {
+            withCredentials: true,
+            headers: {
+              "API-KEY": "8d9bd45d-58a9-43ac-8b78-2c71c9e79611",
+            },
+          }
+        )
         .then((response) => {
           debugger;
           console.log(response);
           if (response.data.resultCode === 0) {
+            debugger;
             axios
               .get(`https://social-network.samuraijs.com/api/1.0/auth/me`, {
                 withCredentials: true,
@@ -90,12 +105,9 @@ class Login extends React.Component {
             />
           ) : null}
           {this.props.login ? (
-            <form>
-              {" "}
-              <button onClick={() => this.logOut()}>
-                {this.props.isAuth ? "Log out" : ""}
-              </button>
-            </form>
+            <button onClick={(e) => this.logOut(e)}>
+              {this.props.isAuth ? "Log out" : ""}
+            </button>
           ) : null}
           <div>
             {!this.props.isAuth ? (
