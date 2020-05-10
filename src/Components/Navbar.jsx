@@ -37,6 +37,9 @@ const Navbar = () => {
       <div>
         <NavLink to="/InBasket">Корзина </NavLink>
       </div>
+      <div>
+        <NavLink to="/Weather">Погода</NavLink>
+      </div>
     </div>
   );
 };

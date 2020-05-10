@@ -2,7 +2,6 @@ import React from "react";
 import classTags from "./input.module.css";
 
 export const InputLogin = ({ input, meta, ...props }) => {
-  debugger;
   return (
     <div>
       <div

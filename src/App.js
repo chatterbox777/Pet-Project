@@ -12,6 +12,7 @@ import Users from "./Components/Users/Users";
 import Youtube from "./Components/Youtube/Youtube";
 import Shop from "./Components/Basket/Shop";
 import InBasket from "./Components/Basket/InBasket";
+import { Weather } from "./Components/Weather/Weather";
 
 class App extends React.Component {
   render() {
@@ -96,6 +97,8 @@ class App extends React.Component {
               />
             )}
           />
+          <Route path="/Weather" render={() => <Weather />} />
+
           <Login
             auth={this.props.auth}
             login={this.props.login}
@@ -105,6 +108,8 @@ class App extends React.Component {
             loginPhoto={this.props.loginPhoto}
             isFetchingAuth={this.props.isFetchingAuth}
             fetchAuth={this.props.fetchAuth}
+            incorrect={this.props.incorrect}
+            checkIncorrect={this.props.checkIncorrect}
           />
         </div>
       </BrowserRouter>
@@ -130,6 +135,7 @@ const mapStateToProps = (state) => {
     photo: state.authReducer.photo,
     basketItems: state.basketReducer.basketItems,
     isFetchingAuth: state.authReducer.isFetching,
+    incorrect: state.authReducer.incorrect,
   };
 };
 
@@ -158,6 +164,8 @@ const mapDispatchToProps = (dispatch) => {
     sortPriceAsc: () => dispatch({ type: "SORT_PRICE_ASC" }),
     sortPriceDesc: () => dispatch({ type: "SORT_PRICE_DESC" }),
     fetchAuth: (boolean) => dispatch({ type: "FETCHING_AUTH", fetch: boolean }),
+    checkIncorrect: (incorrect) =>
+      dispatch({ type: "INCORRECT_PASS_OR_EMAIL", incorrect: incorrect }),
   };
 };
 

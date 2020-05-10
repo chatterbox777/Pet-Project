@@ -4,6 +4,7 @@ import * as axios from "axios";
 import ava from "../../assets/Din.jpg";
 import classTags from "./Login.module.css";
 import LoginReduxForm from "./LoginForm";
+import preloader from "../../assets/loader.gif";
 
 class Login extends React.Component {
   componentDidMount() {
@@ -30,6 +31,7 @@ class Login extends React.Component {
 
   logOut(e) {
     e.preventDefault();
+    this.props.fetchAuth(true);
     axios
       .delete(`https://social-network.samuraijs.com/api/1.0/auth/login`, {
         withCredentials: true,
@@ -42,6 +44,7 @@ class Login extends React.Component {
         if (response.data.resultCode === 0) {
           this.props.auth("", false);
         }
+        this.props.fetchAuth(false);
         return "";
       });
   }
@@ -81,8 +84,11 @@ class Login extends React.Component {
                 if (response.data.resultCode === 0) {
                   this.props.auth(response.data.data, true);
                 }
+
                 this.props.fetchAuth(false);
               });
+          } else if (response.data.resultCode === 10) {
+            this.props.checkIncorrect(response.data.messages[0]);
           }
           return null;
         });
@@ -95,6 +101,7 @@ class Login extends React.Component {
           <NavLink to="/Login">
             {!this.props.login ? "Login" : this.props.login}
           </NavLink>
+
           {this.props.login ? (
             <button onClick={() => this.sendLoginPhoto()}>Получить фото</button>
           ) : null}
@@ -125,6 +132,7 @@ class Login extends React.Component {
                     loginPhoto={this.props.loginPhoto}
                     onSubmit={onSubmit}
                     isFetchingAuth={this.props.isFetchingAuth}
+                    incorrect={this.props.incorrect}
                   />
                 )}
               />

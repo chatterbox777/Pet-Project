@@ -5,6 +5,7 @@ let initialState = {
   isAuth: false,
   isFetching: false,
   photo: "",
+  incorrect: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -26,6 +27,11 @@ export const authReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: action.fetch,
+      };
+    case "INCORRECT_PASS_OR_EMAIL":
+      return {
+        ...state,
+        incorrect: action.incorrect,
       };
     default:
       return state;

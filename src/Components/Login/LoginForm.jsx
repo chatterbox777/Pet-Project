@@ -13,7 +13,9 @@ const LoginForm = (props) => {
 
   return (
     <div className={classTags.align}>
-      {props.isFetchingAuth ? (
+      {props.incorrect ? (
+        props.incorrect
+      ) : props.isFetchingAuth ? (
         <img src={preloader} alt={"preloader"} />
       ) : (
         <form onSubmit={handleSubmit} className={classTags.block} action="">
