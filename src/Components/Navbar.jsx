@@ -40,6 +40,9 @@ const Navbar = () => {
       <div>
         <NavLink to="/Weather">Погода</NavLink>
       </div>
+      <div>
+        <NavLink to="/LiveSearch">Live Поиск</NavLink>
+      </div>
     </div>
   );
 };

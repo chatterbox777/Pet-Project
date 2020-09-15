@@ -13,6 +13,7 @@ import Youtube from "./Components/Youtube/Youtube";
 import Shop from "./Components/Basket/Shop";
 import InBasket from "./Components/Basket/InBasket";
 import { Weather } from "./Components/Weather/Weather";
+import LiveSearch from "./Components/liveSearcher/LiveSearch";
 
 class App extends React.Component {
   render() {
@@ -98,7 +99,7 @@ class App extends React.Component {
             )}
           />
           <Route path="/Weather" render={() => <Weather />} />
-
+          <Route path="/LiveSearch" render={() => <LiveSearch />} />
           <Login
             auth={this.props.auth}
             login={this.props.login}
@@ -118,6 +119,7 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
+  console.log(state);
   return {
     count: state.mainReducer.count,
     history: state.mainReducer.history,

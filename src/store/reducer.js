@@ -42,6 +42,7 @@ export const mainReducer = (state = initialState, action) => {
       return {
         ...state,
         history: state.history.splice(0, 0),
+        count: 0,
       };
 
     default:
